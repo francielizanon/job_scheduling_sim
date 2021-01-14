@@ -61,7 +61,6 @@ $ python3 replay.py [scheduling algorithm] [number of nodes] [number of jobs]
 
 **Additional challenge**
 
-4. Write the FCFS with EASY backfilling (*fcfs\_easy*). 
-Compare it to the FCFS and FF schedulers for the different metrics and different numbers of nodes. Try to understand their differences.
+4. Write the FCFS with EASY backfilling (*fcfs\_easy*). Check if it passes the tests in [the unitary tests file](unitary_tests/test_fcfs_easy.py). Compare it to the FCFS and FF schedulers for the different metrics and different numbers of nodes. Try to understand their differences.
 
 5. Write your own batch scheduling algorithm and compare it to the aforementioned algorithms.

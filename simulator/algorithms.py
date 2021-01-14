@@ -28,7 +28,7 @@ Job
 """
 
 
-def fcfs(jobs, cluster):
+def fcfs(jobs, cluster, clock):
     """First Come, First Served scheduler.
 
     Parameters
@@ -37,6 +37,8 @@ def fcfs(jobs, cluster):
         Queue of available jobs
     cluster : Cluster object
         Cluster containing the nodes required by jobs
+    clock : int
+        Current clock. Useful for debugging and advanced functions
 
     Returns
     -------
@@ -62,7 +64,7 @@ def fcfs(jobs, cluster):
         return (False, None)
 
 
-def ff(jobs, cluster):
+def ff(jobs, cluster, clock):
     """First Fit scheduler.
 
     Parameters
@@ -71,6 +73,8 @@ def ff(jobs, cluster):
         Queue of available jobs
     cluster : Cluster object
         Cluster containing the nodes required by jobs
+    clock : int
+        Current clock. Useful for debugging and advanced functions
 
     Returns
     -------
@@ -85,7 +89,7 @@ def ff(jobs, cluster):
     # TODO
 
 
-def sjf(jobs, cluster):
+def sjf(jobs, cluster, clock):
     """Shortest-Job First scheduler.
 
     Parameters
@@ -94,6 +98,8 @@ def sjf(jobs, cluster):
         Queue of available jobs
     cluster : Cluster object
         Cluster containing the nodes required by jobs
+    clock : int
+        Current clock. Useful for debugging and advanced functions
 
     Returns
     -------
@@ -105,12 +111,12 @@ def sjf(jobs, cluster):
     This scheduler will schedule the jobs that have the smallest
     requested run times first.
     It only considers jobs that could be run on the available nodes.
-    In the case of a tie, it chooses the job with the smallest identifier.
+    In the case of a tie, it choses the job with the smallest identifier.
     """
     # TODO
 
 
-def fcfs_easy(jobs, cluster):
+def fcfs_easy(jobs, cluster, clock):
     """First Come, First Served scheduler with EASY backfilling.
 
     Parameters
@@ -119,6 +125,8 @@ def fcfs_easy(jobs, cluster):
         Queue of available jobs
     cluster : Cluster object
         Cluster containing the nodes required by jobs
+    clock : int
+        Current clock. Useful for debugging and advanced functions
 
     Returns
     -------
@@ -126,3 +134,13 @@ def fcfs_easy(jobs, cluster):
         True if a job can be scheduled + the job to be scheduled
     """
     # TODO
+    # Tips:
+    # 1. Discover if you can schedule the first job
+    # 2. If you cannot, then discover when it could be first scheduled.
+    #    Use the information on the dict in cluster.running_jobs
+    #    for that. Each job has attributes 'expected_end' and
+    #    'nodes'.
+    # 3. Using the predicted information, check for the first job
+    #    on the list that could be scheduled without delaying the
+    #    first job (i.e., its requested_run_time should be smaller
+    #    than the predicted start of the first job minus the current clock).

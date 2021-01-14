@@ -9,6 +9,9 @@ class Cluster:
         Number of nodes currently available in the cluster
     used_resources : int
         Accumulated seconds-nodes used by jobs.
+    running_jobs : dict {Job.jobID, Job}
+        List of jobs currently running in the cluster
+
 
     Notes
     -----
@@ -21,6 +24,7 @@ class Cluster:
         self.total_nodes = nodes
         self.available_nodes = nodes
         self.used_resources = 0
+        self.running_jobs = dict()
 
     def schedule_job(self, job, clock):
         """Schedules a job in the cluster.
@@ -54,6 +58,8 @@ class Cluster:
         # Schedules job, nodes become unavailable for the time being
         self.available_nodes -= job.nodes
         job.schedule(clock)
+        # Adds jobs to the list of running jobs
+        self.running_jobs[job.jobID] = job
 
         return True
 
@@ -80,6 +86,8 @@ class Cluster:
         self.available_nodes += job.nodes
         # Updates the statistics
         self.used_resources += job.nodes * job.run_time
+        # Removes job from the list of running jobs
+        del self.running_jobs[job.jobID]
 
     def report_statistics(self, makespan):
         """Reports statistics on the usage of the machine.
@@ -99,7 +107,7 @@ class Cluster:
         # this makespan, and compares it to how much we actually used
         total_resources = makespan * self.total_nodes
         idle = total_resources - self.used_resources
-        ret = (f'Usage of the machine:\n' +
+        ret = ('Usage of the machine:\n' +
                f'- {self.used_resources} node-seconds were used,' +
                f' from {total_resources} available.\n' +
                f'- Nodes spent {idle} seconds in idle,' +

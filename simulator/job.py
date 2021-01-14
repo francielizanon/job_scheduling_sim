@@ -15,6 +15,8 @@ class Job:
         Number of nodes requested by the job
     schedule_time : int
         Timestamp of when the job was scheduled (to calculate the wait time)
+    expected_end : int
+        Timestamp of when the job thinks it will end (schedule - req. run time)
 
     Notes
     -----
@@ -30,6 +32,7 @@ class Job:
         self.requested_run_time = requested_run_time
         self.schedule_time = -1
         self.nodes = nodes
+        self.expected_end = -1
 
     def schedule(self, clock):
         """Called when a job is scheduled to run
@@ -40,6 +43,7 @@ class Job:
             the timestamp of when the job is starting its execution
         """
         self.schedule_time = clock
+        self.expected_end = clock + self.requested_run_time
 
     def get_wait_time(self):
         """Returns the time spent by the job in the queue

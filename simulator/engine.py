@@ -62,7 +62,7 @@ class Engine:
             if self.debug:
                 print(f'DEBUG: Set {algorithm_name} as the scheduler.')
         except AttributeError:
-            print(f'PANIC! Could not find scheduling algorithm' +
+            print('PANIC! Could not find scheduling algorithm' +
                   f' {algorithm_name}. Stopping execution.')
             exit()
 
@@ -130,6 +130,8 @@ class Engine:
         queue = []
         # list to keep track of how long the jobs stay in the queue
         wait_times = []
+        # list to keep track of the completion time of the jobs
+        completion_times = []
         scheduled_jobs = 0
 
         events = self.events
@@ -138,14 +140,16 @@ class Engine:
             # schedules new jobs while possible
             if len(queue) > 0:  # if there are queued jobs
                 if self.debug:
-                    print(f'DEBUG: Jobs in the queue to schedule:' +
+                    print('DEBUG: Jobs in the queue to schedule:' +
                           f'{printable(queue)}')
 
                 # Checks with the scheduler if there are any
                 # jobs that it is able to schedule right now
                 newdecision = True
                 while newdecision and (len(queue) > 0):
-                    newdecision, job = self.scheduler(queue, self.cluster)
+                    newdecision, job = self.scheduler(queue,
+                                                      self.cluster,
+                                                      self.clock)
 
                     # checks if the scheduler found a suitable job
                     if newdecision:
@@ -166,9 +170,11 @@ class Engine:
                                         Event(False, job)))
                         # stores the wait time for this job
                         wait_times.append(job.get_wait_time())
+                        # stores the predicted completion time of this job
+                        completion_times.append(self.clock + job.run_time)
                         # counts another scheduled job
                         scheduled_jobs += 1
-                        if (scheduled_jobs % 10000) == 0:
+                        if (scheduled_jobs % 1000) == 0:
                             print(f'- Scheduled the {scheduled_jobs}' +
                                   'th job.')
 
@@ -191,7 +197,7 @@ class Engine:
                 if self.debug:
                     print(f'DEBUG: time moved to timestamp {self.clock}.' +
                           f' Job {newEvent.job_info} finished now.' +
-                          f' The cluster now has' +
+                          ' The cluster now has' +
                           f' {self.cluster.available_nodes} nodes available.')
 
         # making sure we emptied the queue too when we finished all events
@@ -200,6 +206,7 @@ class Engine:
         # End of the simulation: print statistics
         print('Simulation finished.\nStatistics:')
         print(f'- makespan: {self.clock}')
+        print(f'- total completion time: {sum(completion_times)}')
         print('- wait times:')
         print(f'-- min: {min(wait_times)}')
         print(f'-- max: {max(wait_times)}')
