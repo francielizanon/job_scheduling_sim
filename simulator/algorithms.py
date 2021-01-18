@@ -143,4 +143,5 @@ def fcfs_easy(jobs, cluster, clock):
     # 3. Using the predicted information, check for the first job
     #    on the list that could be scheduled without delaying the
     #    first job (i.e., its requested_run_time should be smaller
-    #    than the predicted start of the first job minus the current clock).
+    #    than the predicted start of the first job minus the current clock
+    #    or it falls in the extra nodes available).
