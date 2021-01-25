@@ -13,7 +13,7 @@ class FCFSEasyTest(unittest.TestCase):
     def test_10000_nodes(self):
         simulator = Engine('fcfs_easy', 10000, -1, '../ANL-Intrepid-2009-1.swf')
         makespan = simulator.run()
-        self.assertEqual(makespan, 30509566)
+        self.assertEqual(makespan, 30422796)
 
     def test_10000_tasks(self):
         simulator = Engine('fcfs_easy', 40960, 10000, '../ANL-Intrepid-2009-1.swf')
@@ -23,7 +23,7 @@ class FCFSEasyTest(unittest.TestCase):
     def test_10000_tasks_and_nodes(self):
         simulator = Engine('fcfs_easy', 10000, 10000, '../ANL-Intrepid-2009-1.swf')
         makespan = simulator.run()
-        self.assertEqual(makespan, 4765307)
+        self.assertEqual(makespan, 4734523)
 
 
 if __name__ == '__main__':
