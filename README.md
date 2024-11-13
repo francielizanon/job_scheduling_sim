@@ -39,8 +39,7 @@ The [simulation engine](simulator/engine.py) uses this information to simulate t
 queue when submitted, and a scheduling algorithm is used to decide when to remove jobs from the queue to
 run them.
 
-At the end of the simulation, the makespan is reported, together with statistics on the wait times (time
-spent in the queue by the jobs while waiting to be scheduled) and on the usage of the machine.
+At the end of the simulation, several statistics are reported. They related to the execution time of the jobs, their wait times (time spent in the queue by the jobs while waiting to be scheduled) and on the usage of the machine.
 
 To run the simulation, use the following command:
 
@@ -53,14 +52,15 @@ $ python3 replay.py [scheduling algorithm] [number of nodes] [number of jobs]
 
 **Basic steps**
 
-1. Run `replay.py` with the FCFS simulator with a few variations on the number of nodes and see how the reported metrics behave. Read [the code of the FCFS scheduler](simulator/algorithms.py) and try to understand how to write your own algorithms.
+0. Run `replay.py` with the FCFS simulator with a few variations on the number of nodes and see how the reported metrics behave. Read [the code of the FCFS scheduler](simulator/algorithms.py) and try to understand how to write your own algorithms.
 
-2. Write the First Fit (*ff*) scheduling algorithm. Check if it passes the tests in [the unitary tests file](unitary_tests/test_ff.py). Compare it to the FCFS scheduler for the different metrics and different numbers of nodes. Try to justify the most interesting changes.
+1. Write the First Fit (*ff*) scheduling algorithm. Check if it passes the tests in [the unitary tests file](unitary_tests/test_ff.py). Present its code. Compare it to the FCFS scheduler for the different metrics and different numbers of nodes. Does this algorithm provide improvements over FCFS? Explain your reasoning.
 
-3. Write the Shortest-Job First (*sjf*) scheduling algorithm. Check if it passes the tests in [the unitary tests file](unitary_tests/test_sjf.py). Compare it to the FF scheduler for the different metrics and different numbers of nodes. Try to understand their differences.
+2. Write the Shortest-Job First (*sjf*) scheduling algorithm. Check if it passes the tests in [the unitary tests file](unitary_tests/test_sjf.py). Present its code. Compare it to the FF scheduler for the different metrics and different numbers of nodes. Does this algorithm provide improvements over FCFS and FF? Explain your reasoning.
+
 
 **Additional challenge**
 
-4. Write the FCFS with EASY backfilling (*fcfs\_easy*). Check if it passes the tests in [the unitary tests file](unitary_tests/test_fcfs_easy.py). Compare it to the FCFS and FF schedulers for the different metrics and different numbers of nodes. Try to understand their differences.
+3. Write the FCFS with EASY backfilling (*fcfs\_easy*). Check if it passes the tests in [the unitary tests file](unitary_tests/test_fcfs_easy.py). Present your code. Compare it to the previous schedulers for the different metrics and different numbers of nodes. Does this algorithm provide any improvements? Explain your reasoning.
 
-5. Write your own batch scheduling algorithm and compare it to the aforementioned algorithms.
+4. Write your own batch scheduling algorithm and compare it to the aforementioned algorithms.
